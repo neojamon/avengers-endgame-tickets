@@ -18,5 +18,9 @@
   "homepage": "https://github.com/neojamon/avengers-endgame-tickets#readme",
   "dependencies": {
     "express": "^4.16.4"
+  },
+  "engines": {
+    "node": ">=8.0.0",
+    "npm": ">=8.0.0"
   }
 }
