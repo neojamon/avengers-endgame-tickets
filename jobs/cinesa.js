@@ -6,6 +6,7 @@ const BASE_URL = 'https://www.cinesa.es';
 
 async function searchAtUrl(url) {
     console.info(`Searching in ${url}...`);
+
     const { data } = await axios.get(url);
     const $page = cheerio(data);
 
@@ -21,7 +22,7 @@ async function searchAtUrl(url) {
         .filter(Boolean)
         .filter(candidate => keywords.some(word => candidate.includes(word)));
 
-    return matches.length > 0;
+    return matches.length ? url : undefined;
 }
 
 async function searchAtHome() {
@@ -40,10 +41,10 @@ async function searchForMoviePage() {
         `${BASE_URL}/Peliculas/vengadores-endgame`,
     ];
     const results = await Promise.all(possibleUrls.map(searchAtUrl));
-    return results.includes(true);
+    return results.find(Boolean);
 }
 
-const cinesa = async function() {
+module.exports = async function() {
     const results = await Promise.all([
         // Let's look at home
         searchAtHome(),
@@ -52,9 +53,9 @@ const cinesa = async function() {
         // Let's look for an existing movie page
         searchForMoviePage(),
     ]);
+    const success = results.find(Boolean);
     return {
-        success: results.includes(true),
+        success: !!success,
+        matches: results.filter(Boolean),
     };
 };
-
-module.exports = cinesa;
