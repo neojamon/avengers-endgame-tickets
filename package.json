@@ -1,0 +1,22 @@
+{
+  "name": "avengers-endgame-tickets",
+  "version": "1.0.0",
+  "description": "Let me know when the avengers tickets go on sale",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/neojamon/avengers-endgame-tickets.git"
+  },
+  "author": "Raul Martin Reyero",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/neojamon/avengers-endgame-tickets/issues"
+  },
+  "homepage": "https://github.com/neojamon/avengers-endgame-tickets#readme",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}
