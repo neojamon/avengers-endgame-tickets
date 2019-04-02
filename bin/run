@@ -23,7 +23,7 @@ if (!jobs[job]) {
 jobs[job]()
     .then(result => {
         console.log(result);
-        if (!result.success) {
+        if (result.success) {
             notifier(JSON.stringify(result.matches));
         }
     })
