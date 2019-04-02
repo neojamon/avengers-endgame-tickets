@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 const jobs = require('../jobs');
+const notifier = require('../lib/notifier');
 
 const args = process.argv.slice(2);
 
@@ -20,5 +21,10 @@ if (!jobs[job]) {
 }
 
 jobs[job]()
-    .then(result => console.log(result))
+    .then(result => {
+        console.log(result);
+        if (!result.success) {
+            notifier(JSON.stringify(result.matches));
+        }
+    })
     .catch(error => console.log(error));

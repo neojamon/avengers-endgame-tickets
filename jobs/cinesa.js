@@ -6,23 +6,12 @@ const BASE_URL = 'https://www.cinesa.es';
 
 async function searchAtUrl(url) {
     console.info(`Searching in ${url}...`);
-
     const { data } = await axios.get(url);
-    const $page = cheerio(data);
+    if (data.horarios && data.horarios.length > 0) {
+        return data;
+    }
 
-    const keywords = [
-        'avengers',
-        'vengadores',
-        'endgame'
-    ];
-
-    const matches = $page.text()
-        .split(os.EOL)
-        .map(text => text.trim())
-        .filter(Boolean)
-        .filter(candidate => keywords.some(word => candidate.includes(word)));
-
-    return matches.length ? url : undefined;
+    return false;
 }
 
 async function searchAtHome() {
@@ -35,10 +24,9 @@ async function searchAtPremierePage() {
 
 async function searchForMoviePage() {
     const possibleUrls = [
-        `${BASE_URL}/Peliculas/avengers--endgame`,
-        `${BASE_URL}/Peliculas/avengers-endgame`,
-        `${BASE_URL}/Peliculas/vengadores--endgame`,
-        `${BASE_URL}/Peliculas/vengadores-endgame`,
+        `${BASE_URL}/Peliculas/Horarios/11395`,
+        `${BASE_URL}/Peliculas/Horarios/11490`,
+        `${BASE_URL}/Peliculas/Horarios/11490/190/28000`,
     ];
     const results = await Promise.all(possibleUrls.map(searchAtUrl));
     return results.find(Boolean);
@@ -47,9 +35,9 @@ async function searchForMoviePage() {
 module.exports = async function() {
     const results = await Promise.all([
         // Let's look at home
-        searchAtHome(),
+        // searchAtHome(),
         // Let's look at the premiere page
-        searchAtPremierePage(),
+        // searchAtPremierePage(),
         // Let's look for an existing movie page
         searchForMoviePage(),
     ]);
